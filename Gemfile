@@ -77,21 +77,21 @@ end
 
 # Development and Test
 group :development, :test do
-  gem "faker"
 
   gem "webmock"
   gem "httpclient", github: "nahi/httpclient", branch: "master", require: false
   gem "websocket-client-simple", github: "matthewd/websocket-client-simple", branch: "close-race", require: false
 
+  gem "pry"
   gem "dotenv-rails"
   gem "dotenv"
   gem "debug", platforms: %i[mri windows], require: "debug/prelude"
-  gem "pry"
 
   # Static analysis for security vulnerabilities
   gem "brakeman", require: false
 
   # Development tools
+  gem "faker"
   gem "annotate"
   gem "factory_bot_rails"
   gem "foreman"
@@ -99,6 +99,7 @@ group :development, :test do
   gem "letter_opener_web"
   gem "rufo"
   gem "bundler-audit"
+
   gem "rspec-rails"
   gem "guard-rspec", require: false
 end
@@ -133,10 +134,6 @@ group :rubocop do
   gem "rubocop-factory_bot"
   gem "rubocop-rails-omakase", require: false
   gem "rubocop-rspec"
-end
-
-group :mdl do
-  gem "mdl", "!= 0.13.0", require: false
 end
 
 # Documentation
