@@ -141,8 +141,6 @@ end
 
 # Documentation
 group :doc do
-  gem "sdoc", git: "https://github.com/rails/sdoc.git", branch: "main"
-  gem "rdoc", "~> 6.7"
   gem "rouge"
   gem "rubyzip", "~> 2.0"
 end
