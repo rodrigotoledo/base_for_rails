@@ -1,4 +1,4 @@
-# Docker Instructions
+# Project Instructions
 
 Need To Clean All Your Docker?
 
@@ -53,8 +53,8 @@ docker compose -f docker-compose.development.yml run app rails db:drop db:create
 Example Of Interaction Between Computer And Container:
 
 ```bash
-docker compose -f docker-compose.development.yml run app rails d model comment
-docker compose -f docker-compose.development.yml run app rails g model comment post:references comment:text
+docker compose -f docker-compose.development.yml run app rails g scaffold post title
+docker compose -f docker-compose.development.yml run app rails g scaffold comment post:references comment:text
 docker compose -f docker-compose.development.yml run app rails c
 ```
 
@@ -69,15 +69,15 @@ docker compose -f docker-compose.development.yml run app bundle exec guard
 ## Security with Docker
 
 ```bash
-docker compose -f docker-compose.development.yml run app bundle exec annotate
 docker compose -f docker-compose.development.yml run app bin/rubocop -A
 docker compose -f docker-compose.development.yml run app bundle exec brakeman
+docker compose -f docker-compose.development.yml run app bundle exec bundle-audit
 ```
 
 or in one line
 
 ```bash
-docker compose -f docker-compose.development.yml run app bundle exec rubocop -A ; docker compose -f docker-compose.development.yml run app bundle exec brakeman ; docker compose -f docker-compose.development.yml run app bundle exec annotate
+docker compose -f docker-compose.development.yml run app bundle exec rubocop -A ; docker compose -f docker-compose.development.yml run app bundle exec brakeman ; docker compose -f docker-compose.development.yml run app bundle exec bundle-audit
 ```
 
 For Migrations (Remembering That You May Need To Run Both In Development And Test):
@@ -125,20 +125,15 @@ bundle exec guard
 
 ## Security
 
-It's a good practice to use annotate, brakeman and rubocop when you are developing. You can setup your own configuration using the example that exists in `.vscode.example` renaming to `.vscode`. Also running docker command to annotate, cover with rubocop and brakeman:
+It's a good practice to use annotate, brakeman and rubocop when you are developing. You can setup your own configuration using the example that exists in `.vscode.example` renaming to `.vscode`.
 
-```bash
-gem install bundle-audit --no-doc
-bundle-audit
-bundle exec annotate
-bin/rubocop -A
-bin/brakeman
-```
+## Tips about tailwind
 
-or with just one command:
+If you are using tailwind, maybe you should change the `Procfile.dev` to listen the correct address:
 
-```bash
-bin/rubocop -A; bin/brakeman; bundle exec annotate
+```Provfile.dev
+web: bin/rails server -b 0.0.0.0
+css: bin/rails tailwindcss:watch
 ```
 
 ## Git Flow

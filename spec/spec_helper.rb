@@ -2,6 +2,9 @@ require 'simplecov'
 SimpleCov.start 'rails' do
   add_filter 'vendor'
   add_filter 'storage'
+  add_filter 'app/helpers/application_helper.rb'
+  add_filter 'app/jobs/application_job.rb'
+  add_filter 'app/mailers/application_mailer.rb'
 end
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|

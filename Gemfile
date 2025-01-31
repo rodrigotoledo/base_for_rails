@@ -4,8 +4,8 @@ source "https://rubygems.org"
 gem "rails", github: "rails/rails", branch: "main"
 
 # Database
-gem "sqlite3", ">= 2.1"
-# gem "pg", "~> 1.1"
+# gem "sqlite3", ">= 2.1"
+gem "pg", "~> 1.1"
 
 # Web server
 gem "puma", ">= 5.0.3"
@@ -102,6 +102,9 @@ group :development, :test do
 
   gem "rspec-rails"
   gem "guard-rspec", require: false
+
+  gem "sidekiq", require: false
+  gem "sidekiq-cron"
 end
 
 # Development only
@@ -140,18 +143,8 @@ end
 group :doc do
   gem "sdoc", git: "https://github.com/rails/sdoc.git", branch: "main"
   gem "rdoc", "~> 6.7"
-  gem "redcarpet", "~> 3.2.3", platforms: :ruby
-  gem "w3c_validators", "~> 1.3.6"
   gem "rouge"
   gem "rubyzip", "~> 2.0"
-end
-
-# Background Jobs
-group :job do
-  gem "sidekiq", require: false
-  gem "queue_classic", ">= 4.0.0", require: false, platforms: :ruby
-  gem "sneakers", require: false
-  gem "backburner", require: false
 end
 
 # Storage
