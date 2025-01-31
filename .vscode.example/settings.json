@@ -5,7 +5,7 @@
   "editor.formatOnSave": true,
   "ruby.rubocop.onSave": true,
   "rubocop.autocorrect": true,
-  "ruby.rubocop.executePath": "/prject/bin/rufo",
+  "ruby.rubocop.executePath": "/project/bin/",
   "ruby.rubocop.useBundler": false,
   "ruby.rubocop.autocorrectOnSave": true,
   "rubocop.safeAutocorrect": false,
