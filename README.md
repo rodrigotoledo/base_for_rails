@@ -136,6 +136,22 @@ web: bin/rails server -b 0.0.0.0
 css: bin/rails tailwindcss:watch
 ```
 
+## Production
+
+Look for the instance ip and:
+
+```bash
+ssh ubuntu@3.140.185.237 -i file.pem
+```
+
+Using docker
+
+```bash
+sudo usermod -aG docker $USER
+newgrp docker
+docker build -t app .
+```
+
 ## Git Flow
 
 This project uses the Git Flow branching model to manage development and releases. Below are the basic commands to get started with Git Flow.
