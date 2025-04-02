@@ -28,6 +28,7 @@ And Change The Dockerfile.Development File With The Value You Found
 So Build You Just Need To Run The First Time:
 
 ```bash
+chmod 777 Gemfile.lock
 docker compose -f docker-compose.development.yml build
 ```
 
