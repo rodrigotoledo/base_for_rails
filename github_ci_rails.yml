@@ -1,44 +1,43 @@
-name: Application workflow
+name: CI
 
 on:
+  pull_request:
   push:
-    branches:
-    - main
+    branches: [ main ]
+
 jobs:
-  rspec:
-    name: RSpec
-    runs-on: ubuntu-20.04
-    env:
-      APPLICATION_NAME: receita_mais
-      JWT_KEY: so_difficult_123
-      RAILS_ENV: test
-      DATABASE_URL: postgres://postgres:postgres@localhost:5432/receita_mais_test
-    services:
-      postgres:
-        image: postgres:latest
-        ports: [ '5432:5432' ]
-        env:
-          POSTGRES_DB: receita_mais_test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          APPLICATION_NAME: receita_mais
-          JWT_KEY: so_difficult_123
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+  scan_ruby:
+    runs-on: ubuntu-latest
+
     steps:
     - name: Checkout code
-      uses: actions/checkout@v1
+      uses: actions/checkout@v4
 
-    - name: Setup Ruby
+    - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
+        ruby-version: .ruby-version
         bundler-cache: true
 
-    - name: Install postgres client dependencies
-      run: sudo apt-get install libpq-dev
+    - name: Scan for common Rails security vulnerabilities using static analysis
+      run: bin/brakeman --no-pager
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: .ruby-version
+        bundler-cache: true
+
+    - name: Lint code for consistent style
+      run: bin/rubocop -f github
 
     - name: Create database
-      run: |
-        bundle exec rails db:create
-        bundle exec rails db:schema:load
+      run: bundle exec rails db:create bundle exec rails db:schema:load
     - name: Run tests
       run: bundle exec rspec spec

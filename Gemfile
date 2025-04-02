@@ -6,8 +6,7 @@ source "https://rubygems.org"
 gem "rails", github: "rails/rails", branch: "main"
 
 # Database
-# gem "sqlite3", ">= 2.1"
-gem "pg", "~> 1.1"
+gem "sqlite3", ">= 2.1"
 
 # Web server
 gem "puma", ">= 5.0.3"
@@ -29,6 +28,7 @@ gem "solid_cache"
 gem "solid_queue"
 
 # Authentication and Security
+gem "authentication-zero"
 gem "bcrypt", "~> 3.1.11", require: false
 gem "email_validator"
 gem "jwt", "~> 2.5"
@@ -76,6 +76,8 @@ if rack_version == "head"
 else
   gem "rack", rack_version
 end
+
+gem "rubocop-rails-omakase", require: false
 
 # Development and Test
 group :development, :test do
@@ -127,17 +129,6 @@ end
 # Linting
 group :lint do
   gem "syntax_tree", "6.1.1", require: false
-end
-
-group :rubocop do
-  gem "rubocop", ">= 1.25.1", require: false
-  gem "rubocop-factory_bot"
-  gem "rubocop-md", require: false
-  gem "rubocop-packaging", require: false
-  gem "rubocop-performance", require: false
-  gem "rubocop-rails", require: false
-  gem "rubocop-rails-omakase", require: false
-  gem "rubocop-rspec"
 end
 
 # Documentation
