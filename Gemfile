@@ -36,8 +36,6 @@ gem "jwt", "~> 2.5"
 # Utilities
 gem "launchy"
 gem "prism"
-gem "redis", ">= 4.0.1", require: false
-gem "redis-namespace"
 gem "useragent", require: false
 
 # Performance
