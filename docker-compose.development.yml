@@ -9,15 +9,17 @@ services:
       - '27017:27017'
     volumes:
       - mongodb_data:/data/db
+    networks:
+      - backend
   db_postgresql:
     container_name: postgresql_container
     image: postgres:14.2-alpine
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-app_development}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -41,16 +43,21 @@ services:
     volumes:
       - .:/app
       - bundle:/usr/local/bundle
+      - db-data:/app/db
     working_dir: /app
     environment:
-      DB: postgresql
-      DB_HOST: db_postgresql
-      DB_PORT: 5432
-      DB_USERNAME: postgres
-      DB_PASSWORD: postgres
+      FORCE_DB_CREATE: ${FORCE_DB_CREATE}
+      FORCE_DB_SEED: ${FORCE_DB_SEED}
+      APPLICATION_NAME: ${APPLICATION_NAME}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PORT: ${PORT}
+      JWT_KEY: ${JWT_KEY}
       BUNDLE_GEMFILE: /app/Gemfile
       REDIS_URL: redis://redis:6379/1
-      PORT: 3000
     command: bin/docker-dev-start-web.sh
     networks:
       - backend
@@ -63,3 +70,4 @@ services:
 volumes:
   bundle:
   postgres_data:
+  db-data:

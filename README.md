@@ -10,7 +10,7 @@ docker system prune -a --volumes -f
 docker network rm $(docker network ls -q)
 rm .db-created
 rm .db-seeded
-rm Gemfile.lock
+chmod 777 Gemfile.lock
 ```
 
 ## With Docker
@@ -35,8 +35,11 @@ docker compose -f docker-compose.development.yml build
 And To Climb The Application Rode:
 
 ```bash
-docker compose -f docker-compose.development.yml up
-docker compose -f docker-compose.development.yml down
+FORCE_DB_CREATE=true FORCE_DB_SEED=true docker compose -f docker-compose.development.yml down
+FORCE_DB_CREATE=true FORCE_DB_SEED=true docker compose -f docker-compose.development.yml up --build
+FORCE_DB_CREATE=true FORCE_DB_SEED=true docker compose -f docker-compose.development.yml up
+docker compose -f docker-compose.development.yml down -v
+docker compose -f docker-compose.development.yml run app bundle install
 docker compose -f docker-compose.development.yml run app bash
 docker compose -f docker-compose.development.yml run app rails active_storage:install
 ```
@@ -64,7 +67,7 @@ docker compose -f docker-compose.development.yml run app rails c
 For Tests For Example Run `Guard`:
 
 ```bash
-docker compose -f docker-compose.development.yml run app bundle exec guard
+docker compose -f docker-compose.development.yml run -e RAILS_ENV=test app bundle exec guard
 ```
 
 ## Security with Docker

@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 
 # Rails
-gem "rails", github: "rails/rails", branch: "main"
+gem "rails", "~> 8.0.2"
 
 # Database
 gem "sqlite3", ">= 2.1"
@@ -48,7 +48,7 @@ gem "thruster", require: false
 
 # Windows platform gems
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
-gem "wdm", ">= 0.1.0", platforms: [:windows]
+gem "wdm", ">= 0.1.0", platforms: [ :windows ]
 
 # Essential Gems
 gem "bootsnap", ">= 1.4.4", require: false
